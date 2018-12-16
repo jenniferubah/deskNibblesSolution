@@ -1,0 +1,28 @@
+.idea
+gradle/
+gradlew.bat
+gradle
+gradlew
+settings.gradle
+.gradle/
+out/
+
+ Volume in drive C is Windows
+ Volume Serial Number is 02C2-1CA8
+
+ Directory of C:\Users\cjuci\IdeaProjects\desk-nibble
+
+2018-12-16  01:57 PM    <DIR>          .
+2018-12-16  01:57 PM    <DIR>          ..
+2018-12-16  01:57 PM                 0 .gitignore
+2018-12-13  01:09 PM    <DIR>          .gradle
+2018-12-16  01:57 PM    <DIR>          .idea
+2018-12-14  06:14 PM               341 build.gradle
+2018-12-13  01:09 PM    <DIR>          gradle
+2018-12-13  01:09 PM             5,296 gradlew
+2018-12-13  01:09 PM             2,260 gradlew.bat
+2018-12-14  06:13 PM    <DIR>          out
+2018-12-13  01:08 PM                36 settings.gradle
+2018-12-13  01:09 PM    <DIR>          src
+               5 File(s)          7,933 bytes
+               7 Dir(s)  535,864,479,744 bytes free
