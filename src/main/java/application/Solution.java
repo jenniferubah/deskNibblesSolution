@@ -2,7 +2,7 @@ package application;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import snacker.Person;
+import snacker.Snackers;
 import stock.Products;
 
 import java.io.*;
@@ -13,17 +13,18 @@ import java.util.*;
 public class Solution {
 
     public static void main(String[] args) {
-        Person[] snackers = getSnackerList();
+        Snackers[] snackers = getSnackerList();
         Map<String,String> emailAndFaveSnack = getEmailAndFaveSnk(snackers);
-        Map<String,Double> stockList = getStockList();
-        solution(stockList, emailAndFaveSnack);
+        Products products = getStockList();
+        Map<String,Double> itemAndPrice = products.getItemAndPrice();
+        findMatchedSnackers(itemAndPrice, emailAndFaveSnack);
     }
 
-    public static Person[] getSnackerList(){
+    public static Snackers[] getSnackerList(){
         String url = "https://s3.amazonaws.com/misc-file-snack/MOCK_SNACKER_DATA.json";
 
         try(InputStream inputStream = new URL(url).openStream();
-            Reader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8)){
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))){
 
             int data = reader.read();
             StringBuffer buffer = new StringBuffer();
@@ -33,7 +34,7 @@ public class Solution {
             }
             String jsonData = buffer.toString();
 
-            Person[] snacker = new GsonBuilder().create().fromJson(jsonData, Person[].class);
+            Snackers[] snacker = new GsonBuilder().create().fromJson(jsonData, Snackers[].class);
             return snacker;
 
         } catch (IOException e){
@@ -44,7 +45,7 @@ public class Solution {
     }
 
 
-    public static Map<String,Double> getStockList(){
+    public static Products getStockList(){
 
         String url = "https://ca.desknibbles.com/products.json?limit=250";
 
@@ -60,8 +61,7 @@ public class Solution {
             String jsonData = buffer.toString();
 
             Products products = new Gson().fromJson(jsonData, Products.class);
-            Map<String,Double> productList = products.getAllProducts();
-            return productList;
+            return products;
 
 
         } catch (IOException e){
@@ -71,7 +71,7 @@ public class Solution {
         return null;
     }
 
-    public static Map<String,String> getEmailAndFaveSnk(Person[] snackers){
+    public static Map<String,String> getEmailAndFaveSnk(Snackers[] snackers){
         Map<String,String> snackerEmailAndSnack = new HashMap<>();
 
         for(int i = 0; i < snackers.length; i++){
@@ -82,7 +82,7 @@ public class Solution {
 
     }
 
-    public static void solution(Map<String,Double> stockList, Map<String,String> emailsAndFaveSnackList){
+    public static void findMatchedSnackers(Map<String,Double> stockList, Map<String,String> emailsAndFaveSnackList){
 
         List<String> faveSnackerEmails = new ArrayList<>();
         Set<String> matchedSnackList = new HashSet<>();

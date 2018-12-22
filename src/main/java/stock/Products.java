@@ -1,14 +1,12 @@
 package stock;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Products {
     private Item[] products;
 
-    public Map<String,Double> getAllProducts(){
+    public Map<String,Double> getItemAndPrice(){
         Map<String,Double> productList = new HashMap<>();
 
         for(int i = 0; i < products.length; i++){
