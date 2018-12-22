@@ -6,6 +6,7 @@ import snacker.Snackers;
 import stock.Products;
 
 import java.io.*;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -24,7 +25,7 @@ public class Solution {
         String url = "https://s3.amazonaws.com/misc-file-snack/MOCK_SNACKER_DATA.json";
 
         try(InputStream inputStream = new URL(url).openStream();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))){
+            InputStream reader = new BufferedInputStream(inputStream)){
 
             int data = reader.read();
             StringBuffer buffer = new StringBuffer();
@@ -34,8 +35,8 @@ public class Solution {
             }
             String jsonData = buffer.toString();
 
-            Snackers[] snacker = new GsonBuilder().create().fromJson(jsonData, Snackers[].class);
-            return snacker;
+            Snackers[] snackers = new GsonBuilder().create().fromJson(jsonData, Snackers[].class);
+            return snackers;
 
         } catch (IOException e){
             e.printStackTrace();
@@ -50,7 +51,7 @@ public class Solution {
         String url = "https://ca.desknibbles.com/products.json?limit=250";
 
         try(InputStream inputStream = new URL(url).openStream();
-            Reader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8)){
+            InputStream reader = new BufferedInputStream(inputStream)){
 
             int data = reader.read();
             StringBuffer buffer = new StringBuffer();
